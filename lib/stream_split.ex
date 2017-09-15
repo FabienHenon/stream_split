@@ -41,8 +41,11 @@ defmodule StreamSplit do
 
   defp continuation_to_stream(cont) do
     wrapped =
-      fn {_, _, acc_cont} -> 
-        case acc_cont.({:cont, :tail}) do
+      fn {_, _, acc_cont} ->
+        res = acc_cont.({:cont, :tail})
+        IO.puts("continuation_to_stream, res")
+        IO.inspect(res)
+        case res do
           acc = {:suspended, item, _cont} ->
             {[item], acc}
           {:done, acc} ->
